@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amul Store - Checkout</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="header-top">
+        <div class="container header-top-inner">
+            <span><i class="fas fa-truck"></i> Free Delivery on orders above ₹500</span>
+            <span><i class="fas fa-phone"></i> Contact: 1800-258-3333</span>
+        </div>
+    </div>
+    <div class="header-main">
+        <div class="container header-main-inner">
+            <a href="index.html" class="logo-link">
+                <h1><span class="amul-logo">AMUL</span> <span class="tagline">The Taste of India</span></h1>
+            </a>
+            <div class="checkout-steps">
+                <div class="step active" id="step1"><i class="fas fa-shopping-cart"></i> Cart</div>
+                <div class="step-line active"></div>
+                <div class="step active" id="step2"><i class="fas fa-map-marker-alt"></i> Delivery</div>
+                <div class="step-line" id="stepLine2"></div>
+                <div class="step" id="step3"><i class="fas fa-credit-card"></i> Payment</div>
+                <div class="step-line" id="stepLine3"></div>
+                <div class="step" id="step4"><i class="fas fa-check-circle"></i> Done</div>
+            </div>
+            <a href="index.html" class="back-to-shop"><i class="fas fa-arrow-left"></i> Back to Shop</a>
+        </div>
+    </div>
+</header>
+
+<main class="container checkout-page">
+    <!-- Delivery Section -->
+    <div class="checkout-section" id="deliverySection">
+        <div class="checkout-grid">
+            <div class="checkout-form-wrap">
+                <h2><i class="fas fa-map-marker-alt"></i> Delivery Address</h2>
+
+                <form id="deliveryForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>First Name *</label>
+                            <input type="text" id="firstName" placeholder="Enter first name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name *</label>
+                            <input type="text" id="lastName" placeholder="Enter last name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" id="email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone *</label>
+                            <input type="tel" id="phone" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Address Line 1 *</label>
+                        <input type="text" id="address1" placeholder="House/Flat No., Building Name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Address Line 2</label>
+                        <input type="text" id="address2" placeholder="Street, Landmark (optional)">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>City *</label>
+                            <input type="text" id="city" placeholder="City" required>
+                        </div>
+                        <div class="form-group">
+                            <label>State *</label>
+                            <select id="state" required>
+                                <option value="">Select State</option>
+                                <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option>
+                                <option>Bihar</option><option>Chhattisgarh</option><option>Goa</option>
+                                <option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option>
+                                <option>Jharkhand</option><option>Karnataka</option><option>Kerala</option>
+                                <option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option>
+                                <option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option>
+                                <option>Odisha</option><option>Punjab</option><option>Rajasthan</option>
+                                <option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option>
+                                <option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option>
+                                <option>West Bengal</option><option>Delhi</option><option>Jammu & Kashmir</option>
+                                <option>Ladakh</option><option>Chandigarh</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>PIN Code *</label>
+                            <input type="text" id="pincode" placeholder="6-digit PIN" pattern="[0-9]{6}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Country</label>
+                            <input type="text" value="India" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Delivery Instructions (optional)</label>
+                        <textarea id="instructions" placeholder="e.g., Leave at door, ring bell, etc." rows="2"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="saveAddress"> Save this address for future orders
+                        </label>
+                    </div>
+
+                    <h2 class="section-gap"><i class="fas fa-clock"></i> Delivery Slot</h2>
+
+                    <div class="delivery-slots" id="deliverySlots">
+                        <label class="slot-card">
+                            <input type="radio" name="slot" value="morning" checked>
+                            <div class="slot-info">
+                                <i class="fas fa-sun"></i>
+                                <div>
+                                    <strong>Morning</strong>
+                                    <span>8:00 AM - 12:00 PM</span>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="slot-card">
+                            <input type="radio" name="slot" value="afternoon">
+                            <div class="slot-info">
+                                <i class="fas fa-cloud-sun"></i>
+                                <div>
+                                    <strong>Afternoon</strong>
+                                    <span>12:00 PM - 5:00 PM</span>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="slot-card">
+                            <input type="radio" name="slot" value="evening">
+                            <div class="slot-info">
+                                <i class="fas fa-moon"></i>
+                                <div>
+                                    <strong>Evening</strong>
+                                    <span>5:00 PM - 9:00 PM</span>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="slot-card">
+                            <input type="radio" name="slot" value="express">
+                            <div class="slot-info">
+                                <i class="fas fa-bolt"></i>
+                                <div>
+                                    <strong>Express</strong>
+                                    <span>Within 2 Hours (+₹49)</span>
+                                    <span class="slot-badge">FAST</span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <h2 class="section-gap"><i class="fas fa-calendar"></i> Delivery Date</h2>
+                    <div class="date-options" id="dateOptions"></div>
+
+                    <button type="button" class="continue-btn" id="toPayment">
+                        Continue to Payment <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+
+            <div class="order-summary-sidebar">
+                <h3>Order Summary</h3>
+                <div class="summary-items" id="summaryItems"></div>
+                <div class="summary-totals">
+                    <div class="summary-row"><span>Subtotal</span><span id="subtotal">₹0</span></div>
+                    <div class="summary-row"><span>Delivery</span><span id="deliveryFee">₹0</span></div>
+                    <div class="summary-row"><span>GST (5%)</span><span id="gst">₹0</span></div>
+                    <div class="summary-row discount" id="discountRow" style="display:none"><span>Discount</span><span id="discountAmt">-₹0</span></div>
+                    <div class="summary-row promo-row" id="promoApplied" style="display:none"><span></span><span class="promo-tag">APPLIED</span></div>
+                    <div class="summary-row total"><span>Total</span><span id="finalTotal">₹0</span></div>
+                </div>
+                <div class="promo-box">
+                    <input type="text" id="promoInput" placeholder="Promo code">
+                    <button id="applyPromo">Apply</button>
+                </div>
+                <p class="promo-msg" id="promoMsg"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Section -->
+    <div class="checkout-section" id="paymentSection" style="display:none;">
+        <div class="checkout-grid">
+            <div class="checkout-form-wrap">
+                <h2><i class="fas fa-credit-card"></i> Payment Method</h2>
+
+                <div class="payment-methods">
+                    <label class="payment-card active" data-method="upi">
+                        <input type="radio" name="payment" value="upi" checked>
+                        <div class="payment-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <div><strong>UPI</strong><span>Google Pay, PhonePe, Paytm</span></div>
+                    </label>
+                    <label class="payment-card" data-method="card">
+                        <input type="radio" name="payment" value="card">
+                        <div class="payment-icon"><i class="fas fa-credit-card"></i></div>
+                        <div><strong>Credit / Debit Card</strong><span>Visa, Mastercard, RuPay</span></div>
+                    </label>
+                    <label class="payment-card" data-method="netbanking">
+                        <input type="radio" name="payment" value="netbanking">
+                        <div class="payment-icon"><i class="fas fa-university"></i></div>
+                        <div><strong>Net Banking</strong><span>All major banks</span></div>
+                    </label>
+                    <label class="payment-card" data-method="wallet">
+                        <input type="radio" name="payment" value="wallet">
+                        <div class="payment-icon"><i class="fas fa-wallet"></i></div>
+                        <div><strong>Wallet</strong><span>Paytm, Amazon Pay</span></div>
+                    </label>
+                    <label class="payment-card" data-method="cod">
+                        <input type="radio" name="payment" value="cod">
+                        <div class="payment-icon"><i class="fas fa-money-bill-wave"></i></div>
+                        <div><strong>Cash on Delivery</strong><span>Pay when you receive</span></div>
+                    </label>
+                </div>
+
+                <!-- UPI Section -->
+                <div class="payment-form" id="upiForm">
+                    <div class="form-group">
+                        <label>UPI ID</label>
+                        <input type="text" id="upiId" placeholder="yourname@upi">
+                    </div>
+                    <p class="upi-note"><i class="fas fa-info-circle"></i> You will receive a payment request on your UPI app</p>
+                </div>
+
+                <!-- Card Section -->
+                <div class="payment-form" id="cardForm" style="display:none;">
+                    <div class="form-group">
+                        <label>Card Number</label>
+                        <div class="card-input-wrap">
+                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                            <div class="card-brands">
+                                <i class="fab fa-cc-visa"></i>
+                                <i class="fab fa-cc-mastercard"></i>
+                                <i class="fab fa-cc-amex"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Cardholder Name</label>
+                        <input type="text" id="cardName" placeholder="Name on card">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiry Date</label>
+                            <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV</label>
+                            <input type="password" id="cardCvv" placeholder="***" maxlength="3">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Net Banking -->
+                <div class="payment-form" id="netbankingForm" style="display:none;">
+                    <div class="bank-grid">
+                        <label class="bank-option"><input type="radio" name="bank" value="sbi"><span>SBI</span></label>
+                        <label class="bank-option"><input type="radio" name="bank" value="hdfc"><span>HDFC</span></label>
+                        <label class="bank-option"><input type="radio" name="bank" value="icici"><span>ICICI</span></label>
+                        <label class="bank-option"><input type="radio" name="bank" value="axis"><span>Axis</span></label>
+                        <label class="bank-option"><input type="radio" name="bank" value="kotak"><span>Kotak</span></label>
+                        <label class="bank-option"><input type="radio" name="bank" value="pnb"><span>PNB</span></label>
+                        <label class="bank-option"><input type="radio" name="bank" value="bob"><span>Bank of Baroda</span></label>
+                        <label class="bank-option"><input type="radio" name="bank" value="idbi"><span>IDBI</span></label>
+                    </div>
+                </div>
+
+                <!-- Wallet -->
+                <div class="payment-form" id="walletForm" style="display:none;">
+                    <div class="wallet-options">
+                        <label class="wallet-option"><input type="radio" name="wallet" value="paytm" checked><span>Paytm</span></label>
+                        <label class="wallet-option"><input type="radio" name="wallet" value="amazonpay"><span>Amazon Pay</span></label>
+                        <label class="wallet-option"><input type="radio" name="wallet" value="mobikwik"><span>MobiKwik</span></label>
+                        <label class="wallet-option"><input type="radio" name="wallet" value="freecharge"><span>Freecharge</span></label>
+                    </div>
+                </div>
+
+                <!-- COD -->
+                <div class="payment-form" id="codForm" style="display:none;">
+                    <div class="cod-info">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Pay cash when your order is delivered. Please keep exact change ready. An additional ₹25 COD charges will apply.</p>
+                    </div>
+                </div>
+
+                <div class="secure-badge">
+                    <i class="fas fa-lock"></i> Your payment information is 100% secure and encrypted
+                </div>
+
+                <div class="payment-actions">
+                    <button type="button" class="back-btn" id="backToDelivery">
+                        <i class="fas fa-arrow-left"></i> Back to Delivery
+                    </button>
+                    <button type="button" class="continue-btn" id="placeOrder">
+                        Place Order <i class="fas fa-check-circle"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="order-summary-sidebar">
+                <h3>Order Summary</h3>
+                <div class="summary-items" id="summaryItems2"></div>
+                <div class="summary-totals">
+                    <div class="summary-row"><span>Subtotal</span><span id="subtotal2">₹0</span></div>
+                    <div class="summary-row"><span>Delivery</span><span id="deliveryFee2">₹0</span></div>
+                    <div class="summary-row"><span>GST (5%)</span><span id="gst2">₹0</span></div>
+                    <div class="summary-row discount" id="discountRow2" style="display:none"><span>Discount</span><span id="discountAmt2">-₹0</span></div>
+                    <div class="summary-row total"><span>Total</span><span id="finalTotal2">₹0</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Section -->
+    <div class="checkout-section" id="successSection" style="display:none;">
+        <div class="success-box">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Order Placed Successfully!</h2>
+            <p class="order-id">Order ID: <strong id="orderId"></strong></p>
+            <p class="success-msg">Thank you for shopping with Amul! Your order has been confirmed.</p>
+
+            <div class="success-details">
+                <div class="success-detail-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Delivery Address</strong>
+                        <p id="successAddress"></p>
+                    </div>
+                </div>
+                <div class="success-detail-card">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <strong>Estimated Delivery</strong>
+                        <p id="successDelivery"></p>
+                    </div>
+                </div>
+                <div class="success-detail-card">
+                    <i class="fas fa-credit-card"></i>
+                    <div>
+                        <strong>Payment Method</strong>
+                        <p id="successPayment"></p>
+                    </div>
+                </div>
+                <div class="success-detail-card">
+                    <i class="fas fa-receipt"></i>
+                    <div>
+                        <strong>Total Amount</strong>
+                        <p id="successTotal"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-actions">
+                <a href="index.html" class="continue-btn"><i class="fas fa-shopping-bag"></i> Continue Shopping</a>
+                <button class="print-btn" onclick="window.print()"><i class="fas fa-print"></i> Print Receipt</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="footer-bottom">
+        <p>&copy; 2026 Amul Store. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="checkout.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+# Amul Store - Git Ignore
+*.tmp
+~$*
+node_modules/
+.env
