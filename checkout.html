@@ -3,192 +3,537 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amul Store - Checkout</title>
+    <title>Satkar Pure Point - Checkout</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .checkout-page { padding: 30px 0 60px; }
+        .ck-header {
+            background: var(--white);
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .ck-header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .ck-steps {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .ck-step {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-300);
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
+        .ck-step.active { color: var(--primary); background: var(--primary-light); }
+        .ck-step.done { color: var(--success); }
+        .ck-step-line { width: 24px; height: 2px; background: var(--gray-300); border-radius: 1px; }
+        .ck-step-line.active { background: var(--primary); }
+        .ck-back {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray-700);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .ck-back:hover { color: var(--primary); }
+
+        .ck-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 28px;
+            align-items: start;
+        }
+        .ck-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+        .ck-card h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--dark);
+        }
+        .ck-card h2 i { color: var(--primary); font-size: 18px; }
+        .ck-gap { margin-top: 28px; }
+
+        .fg { margin-bottom: 16px; }
+        .fg label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--gray-700);
+        }
+        .fg input, .fg select, .fg textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border: 2px solid var(--gray-300);
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: var(--transition);
+            background: var(--gray-100);
+        }
+        .fg input:focus, .fg select:focus, .fg textarea:focus {
+            border-color: var(--primary);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(13,110,58,0.08);
+        }
+        .fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+        /* Slots */
+        .slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; }
+        .slot-card { cursor: pointer; }
+        .slot-card input { display: none; }
+        .slot-body {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            border: 2px solid var(--gray-300);
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+        .slot-body i { font-size: 20px; color: var(--primary); }
+        .slot-body strong { display: block; font-size: 13px; }
+        .slot-body span { font-size: 11px; color: var(--gray-500); }
+        .slot-fast {
+            background: var(--accent);
+            color: var(--dark);
+            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+        .slot-card input:checked + .slot-body { border-color: var(--primary); background: var(--primary-light); }
+
+        /* Dates */
+        .dates { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+        .date-chip { flex-shrink: 0; cursor: pointer; }
+        .date-chip input { display: none; }
+        .date-chip span {
+            display: block;
+            padding: 9px 16px;
+            border: 2px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .date-chip input:checked + span { border-color: var(--primary); background: var(--primary); color: #fff; }
+
+        /* Payment */
+        .pay-methods { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+        .pay-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            border: 2px solid var(--gray-300);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .pay-card input { display: none; }
+        .pay-card.active { border-color: var(--primary); background: var(--primary-light); }
+        .pay-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gray-100);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+        .pay-card strong { display: block; font-size: 13px; }
+        .pay-card span { font-size: 11px; color: var(--gray-500); }
+
+        .pay-form {
+            background: var(--gray-100);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 14px;
+        }
+        .card-brands {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 5px;
+            font-size: 18px;
+            color: var(--gray-300);
+        }
+        .card-wrap { position: relative; }
+
+        .bank-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .bank-opt { cursor: pointer; }
+        .bank-opt input { display: none; }
+        .bank-opt span {
+            display: block;
+            text-align: center;
+            padding: 11px 8px;
+            border: 2px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .bank-opt input:checked + span { border-color: var(--primary); background: var(--primary); color: #fff; }
+
+        .wallet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .wallet-opt { cursor: pointer; }
+        .wallet-opt input { display: none; }
+        .wallet-opt span {
+            display: block;
+            text-align: center;
+            padding: 12px;
+            border: 2px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .wallet-opt input:checked + span { border-color: var(--primary); background: var(--primary); color: #fff; }
+
+        .cod-box {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            background: var(--accent-light);
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid #f0d060;
+        }
+        .cod-box i { color: var(--accent); font-size: 18px; margin-top: 2px; }
+        .cod-box p { font-size: 13px; color: var(--gray-700); line-height: 1.6; }
+
+        .secure-bar {
+            text-align: center;
+            padding: 12px;
+            background: var(--primary-light);
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 14px 0;
+        }
+        .secure-bar i { margin-right: 4px; }
+
+        .pay-actions { display: flex; gap: 12px; }
+        .btn-back {
+            padding: 13px 22px;
+            border: 2px solid var(--gray-300);
+            background: var(--white);
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+        .btn-back:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-continue {
+            flex: 1;
+            padding: 13px 24px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        .btn-continue:hover { background: var(--primary-dark); }
+
+        /* Summary Sidebar */
+        .ck-summary {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 90px;
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+        .ck-summary h3 { font-size: 16px; font-weight: 700; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--gray-100); }
+        .sum-items { max-height: 280px; overflow-y: auto; margin-bottom: 14px; }
+        .sum-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        .sum-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--primary-light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .sum-info { flex: 1; }
+        .sum-name { font-size: 12px; font-weight: 500; line-height: 1.3; }
+        .sum-qty { font-size: 11px; color: var(--gray-500); }
+        .sum-price { font-size: 13px; font-weight: 700; color: var(--primary); white-space: nowrap; }
+
+        .sum-totals { border-top: 1px solid var(--gray-100); padding-top: 12px; }
+        .sum-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            padding: 5px 0;
+            color: var(--gray-700);
+        }
+        .sum-row.discount { color: var(--success); font-weight: 600; }
+        .sum-row.total {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--dark);
+            border-top: 2px solid var(--gray-100);
+            margin-top: 8px;
+            padding-top: 10px;
+        }
+        .promo-row { display: flex; gap: 8px; margin-top: 14px; }
+        .promo-row input {
+            flex: 1;
+            padding: 9px 12px;
+            border: 2px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 12px;
+            font-family: inherit;
+            outline: none;
+        }
+        .promo-row input:focus { border-color: var(--primary); }
+        .promo-row button {
+            padding: 9px 16px;
+            background: var(--dark);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .promo-msg { font-size: 11px; margin-top: 5px; }
+
+        /* Success */
+        .success-card {
+            max-width: 620px;
+            margin: 0 auto;
+            text-align: center;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 40px 30px;
+            box-shadow: var(--shadow-md);
+        }
+        .success-check {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 36px;
+            color: var(--primary);
+            animation: popIn 0.5s ease;
+        }
+        @keyframes popIn { 0% { transform: scale(0); } 70% { transform: scale(1.15); } 100% { transform: scale(1); } }
+        .success-card h2 { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
+        .success-oid { font-size: 13px; color: var(--gray-500); margin-bottom: 4px; }
+        .success-oid strong { color: var(--primary); }
+        .success-msg { font-size: 14px; color: var(--gray-500); margin-bottom: 24px; }
+
+        .success-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 28px;
+            text-align: left;
+        }
+        .success-item {
+            display: flex;
+            gap: 12px;
+            padding: 16px;
+            background: var(--gray-100);
+            border-radius: 12px;
+        }
+        .success-item i { font-size: 18px; color: var(--primary); margin-top: 2px; }
+        .success-item strong { display: block; font-size: 12px; margin-bottom: 3px; }
+        .success-item p { font-size: 12px; color: var(--gray-700); line-height: 1.4; }
+
+        .success-btns { display: flex; gap: 10px; justify-content: center; }
+        .success-btns .btn-continue { flex: none; padding: 13px 28px; }
+        .btn-print {
+            padding: 13px 22px;
+            border: 2px solid var(--gray-300);
+            background: var(--white);
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        .btn-print:hover { border-color: var(--primary); color: var(--primary); }
+
+        @media (max-width: 900px) {
+            .ck-grid { grid-template-columns: 1fr; }
+            .ck-summary { position: static; }
+            .ck-steps { display: none; }
+            .fg-row { grid-template-columns: 1fr; }
+            .slots { grid-template-columns: 1fr 1fr; }
+            .bank-grid { grid-template-columns: repeat(2, 1fr); }
+            .success-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
 
-<header class="header">
-    <div class="header-top">
-        <div class="container header-top-inner">
-            <span><i class="fas fa-truck"></i> Free Delivery on orders above ₹500</span>
-            <span><i class="fas fa-phone"></i> Contact: 1800-258-3333</span>
-        </div>
-    </div>
-    <div class="header-main">
-        <div class="container header-main-inner">
-            <a href="index.html" class="logo-link">
-                <h1><span class="amul-logo">AMUL</span> <span class="tagline">The Taste of India</span></h1>
-            </a>
-            <div class="checkout-steps">
-                <div class="step active" id="step1"><i class="fas fa-shopping-cart"></i> Cart</div>
-                <div class="step-line active"></div>
-                <div class="step active" id="step2"><i class="fas fa-map-marker-alt"></i> Delivery</div>
-                <div class="step-line" id="stepLine2"></div>
-                <div class="step" id="step3"><i class="fas fa-credit-card"></i> Payment</div>
-                <div class="step-line" id="stepLine3"></div>
-                <div class="step" id="step4"><i class="fas fa-check-circle"></i> Done</div>
+<!-- Header -->
+<div class="ck-header">
+    <div class="container ck-header-inner">
+        <a href="index.html" class="brand">
+            <div class="brand-icon"><i class="fas fa-leaf"></i></div>
+            <div class="brand-text">
+                <span class="brand-name">Satkar Pure Point</span>
+                <span class="brand-tag">An Amul Enterprise</span>
             </div>
-            <a href="index.html" class="back-to-shop"><i class="fas fa-arrow-left"></i> Back to Shop</a>
+        </a>
+        <div class="ck-steps">
+            <div class="ck-step active"><i class="fas fa-shopping-cart"></i> Cart</div>
+            <div class="ck-step-line active"></div>
+            <div class="ck-step active" id="step2"><i class="fas fa-map-marker-alt"></i> Delivery</div>
+            <div class="ck-step-line" id="stepLine2"></div>
+            <div class="ck-step" id="step3"><i class="fas fa-credit-card"></i> Payment</div>
+            <div class="ck-step-line" id="stepLine3"></div>
+            <div class="ck-step" id="step4"><i class="fas fa-check-circle"></i> Done</div>
         </div>
+        <a href="index.html" class="ck-back"><i class="fas fa-arrow-left"></i> Back to Shop</a>
     </div>
-</header>
+</div>
 
 <main class="container checkout-page">
-    <!-- Delivery Section -->
-    <div class="checkout-section" id="deliverySection">
-        <div class="checkout-grid">
-            <div class="checkout-form-wrap">
-                <h2><i class="fas fa-map-marker-alt"></i> Delivery Address</h2>
 
-                <form id="deliveryForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>First Name *</label>
-                            <input type="text" id="firstName" placeholder="Enter first name" required>
+    <!-- Delivery -->
+    <div id="deliverySection">
+        <div class="ck-grid">
+            <div>
+                <div class="ck-card">
+                    <h2><i class="fas fa-map-marker-alt"></i> Delivery Address</h2>
+                    <form id="deliveryForm">
+                        <div class="fg-row">
+                            <div class="fg"><label>First Name *</label><input type="text" id="firstName" placeholder="First name" required></div>
+                            <div class="fg"><label>Last Name *</label><input type="text" id="lastName" placeholder="Last name" required></div>
                         </div>
-                        <div class="form-group">
-                            <label>Last Name *</label>
-                            <input type="text" id="lastName" placeholder="Enter last name" required>
+                        <div class="fg-row">
+                            <div class="fg"><label>Email *</label><input type="email" id="email" placeholder="your@email.com" required></div>
+                            <div class="fg"><label>Phone *</label><input type="tel" id="phone" placeholder="10-digit mobile" pattern="[0-9]{10}" required></div>
                         </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Email *</label>
-                            <input type="email" id="email" placeholder="your@email.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Phone *</label>
-                            <input type="tel" id="phone" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Address Line 1 *</label>
-                        <input type="text" id="address1" placeholder="House/Flat No., Building Name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Address Line 2</label>
-                        <input type="text" id="address2" placeholder="Street, Landmark (optional)">
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>City *</label>
-                            <input type="text" id="city" placeholder="City" required>
-                        </div>
-                        <div class="form-group">
-                            <label>State *</label>
-                            <select id="state" required>
-                                <option value="">Select State</option>
-                                <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option>
-                                <option>Bihar</option><option>Chhattisgarh</option><option>Goa</option>
-                                <option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option>
-                                <option>Jharkhand</option><option>Karnataka</option><option>Kerala</option>
-                                <option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option>
-                                <option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option>
-                                <option>Odisha</option><option>Punjab</option><option>Rajasthan</option>
-                                <option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option>
-                                <option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option>
-                                <option>West Bengal</option><option>Delhi</option><option>Jammu & Kashmir</option>
-                                <option>Ladakh</option><option>Chandigarh</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>PIN Code *</label>
-                            <input type="text" id="pincode" placeholder="6-digit PIN" pattern="[0-9]{6}" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Country</label>
-                            <input type="text" value="India" disabled>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Delivery Instructions (optional)</label>
-                        <textarea id="instructions" placeholder="e.g., Leave at door, ring bell, etc." rows="2"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="saveAddress"> Save this address for future orders
-                        </label>
-                    </div>
-
-                    <h2 class="section-gap"><i class="fas fa-clock"></i> Delivery Slot</h2>
-
-                    <div class="delivery-slots" id="deliverySlots">
-                        <label class="slot-card">
-                            <input type="radio" name="slot" value="morning" checked>
-                            <div class="slot-info">
-                                <i class="fas fa-sun"></i>
-                                <div>
-                                    <strong>Morning</strong>
-                                    <span>8:00 AM - 12:00 PM</span>
-                                </div>
+                        <div class="fg"><label>Address Line 1 *</label><input type="text" id="address1" placeholder="House/Flat, Building" required></div>
+                        <div class="fg"><label>Address Line 2</label><input type="text" id="address2" placeholder="Street, Landmark (optional)"></div>
+                        <div class="fg-row">
+                            <div class="fg"><label>City *</label><input type="text" id="city" placeholder="City" required></div>
+                            <div class="fg"><label>State *</label>
+                                <select id="state" required>
+                                    <option value="">Select State</option>
+                                    <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option>
+                                    <option>Bihar</option><option>Chhattisgarh</option><option>Goa</option>
+                                    <option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option>
+                                    <option>Jharkhand</option><option>Karnataka</option><option>Kerala</option>
+                                    <option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option>
+                                    <option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option>
+                                    <option>Odisha</option><option>Punjab</option><option>Rajasthan</option>
+                                    <option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option>
+                                    <option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option>
+                                    <option>West Bengal</option><option>Delhi</option><option>Jammu & Kashmir</option>
+                                    <option>Ladakh</option><option>Chandigarh</option>
+                                </select>
                             </div>
-                        </label>
-                        <label class="slot-card">
-                            <input type="radio" name="slot" value="afternoon">
-                            <div class="slot-info">
-                                <i class="fas fa-cloud-sun"></i>
-                                <div>
-                                    <strong>Afternoon</strong>
-                                    <span>12:00 PM - 5:00 PM</span>
-                                </div>
-                            </div>
-                        </label>
-                        <label class="slot-card">
-                            <input type="radio" name="slot" value="evening">
-                            <div class="slot-info">
-                                <i class="fas fa-moon"></i>
-                                <div>
-                                    <strong>Evening</strong>
-                                    <span>5:00 PM - 9:00 PM</span>
-                                </div>
-                            </div>
-                        </label>
-                        <label class="slot-card">
-                            <input type="radio" name="slot" value="express">
-                            <div class="slot-info">
-                                <i class="fas fa-bolt"></i>
-                                <div>
-                                    <strong>Express</strong>
-                                    <span>Within 2 Hours (+₹49)</span>
-                                    <span class="slot-badge">FAST</span>
-                                </div>
-                            </div>
-                        </label>
+                        </div>
+                        <div class="fg-row">
+                            <div class="fg"><label>PIN Code *</label><input type="text" id="pincode" placeholder="6-digit PIN" pattern="[0-9]{6}" required></div>
+                            <div class="fg"><label>Country</label><input type="text" value="India" disabled></div>
+                        </div>
+                        <div class="fg"><label>Delivery Instructions</label><textarea id="instructions" placeholder="Leave at door, ring bell, etc." rows="2"></textarea></div>
+                    </form>
+                </div>
+
+                <div class="ck-card ck-gap">
+                    <h2><i class="fas fa-clock"></i> Delivery Slot</h2>
+                    <div class="slots" id="deliverySlots">
+                        <label class="slot-card"><input type="radio" name="slot" value="morning" checked><div class="slot-body"><i class="fas fa-sun"></i><div><strong>Morning</strong><span>8 AM - 12 PM</span></div></div></label>
+                        <label class="slot-card"><input type="radio" name="slot" value="afternoon"><div class="slot-body"><i class="fas fa-cloud-sun"></i><div><strong>Afternoon</strong><span>12 PM - 5 PM</span></div></div></label>
+                        <label class="slot-card"><input type="radio" name="slot" value="evening"><div class="slot-body"><i class="fas fa-moon"></i><div><strong>Evening</strong><span>5 PM - 9 PM</span></div></div></label>
+                        <label class="slot-card"><input type="radio" name="slot" value="express"><div class="slot-body"><i class="fas fa-bolt"></i><div><strong>Express</strong><span>Within 2 Hours<span class="slot-fast">+₹49</span></span></div></div></label>
                     </div>
+                </div>
 
-                    <h2 class="section-gap"><i class="fas fa-calendar"></i> Delivery Date</h2>
-                    <div class="date-options" id="dateOptions"></div>
+                <div class="ck-card ck-gap">
+                    <h2><i class="fas fa-calendar-alt"></i> Delivery Date</h2>
+                    <div class="dates" id="dateOptions"></div>
+                </div>
 
-                    <button type="button" class="continue-btn" id="toPayment">
-                        Continue to Payment <i class="fas fa-arrow-right"></i>
-                    </button>
-                </form>
+                <button type="button" class="btn-continue ck-gap" id="toPayment" style="width:100%">
+                    Continue to Payment <i class="fas fa-arrow-right"></i>
+                </button>
             </div>
 
-            <div class="order-summary-sidebar">
+            <div class="ck-summary">
                 <h3>Order Summary</h3>
-                <div class="summary-items" id="summaryItems"></div>
-                <div class="summary-totals">
-                    <div class="summary-row"><span>Subtotal</span><span id="subtotal">₹0</span></div>
-                    <div class="summary-row"><span>Delivery</span><span id="deliveryFee">₹0</span></div>
-                    <div class="summary-row"><span>GST (5%)</span><span id="gst">₹0</span></div>
-                    <div class="summary-row discount" id="discountRow" style="display:none"><span>Discount</span><span id="discountAmt">-₹0</span></div>
-                    <div class="summary-row promo-row" id="promoApplied" style="display:none"><span></span><span class="promo-tag">APPLIED</span></div>
-                    <div class="summary-row total"><span>Total</span><span id="finalTotal">₹0</span></div>
+                <div class="sum-items" id="summaryItems"></div>
+                <div class="sum-totals">
+                    <div class="sum-row"><span>Subtotal</span><span id="subtotal">₹0</span></div>
+                    <div class="sum-row"><span>Delivery</span><span id="deliveryFee">FREE</span></div>
+                    <div class="sum-row"><span>GST (5%)</span><span id="gst">₹0</span></div>
+                    <div class="sum-row discount" id="discountRow" style="display:none"><span>Discount</span><span id="discountAmt">-₹0</span></div>
+                    <div class="sum-row total"><span>Total</span><span id="finalTotal">₹0</span></div>
                 </div>
-                <div class="promo-box">
+                <div class="promo-row">
                     <input type="text" id="promoInput" placeholder="Promo code">
                     <button id="applyPromo">Apply</button>
                 </div>
@@ -197,192 +542,103 @@
         </div>
     </div>
 
-    <!-- Payment Section -->
-    <div class="checkout-section" id="paymentSection" style="display:none;">
-        <div class="checkout-grid">
-            <div class="checkout-form-wrap">
-                <h2><i class="fas fa-credit-card"></i> Payment Method</h2>
-
-                <div class="payment-methods">
-                    <label class="payment-card active" data-method="upi">
-                        <input type="radio" name="payment" value="upi" checked>
-                        <div class="payment-icon"><i class="fas fa-mobile-alt"></i></div>
-                        <div><strong>UPI</strong><span>Google Pay, PhonePe, Paytm</span></div>
-                    </label>
-                    <label class="payment-card" data-method="card">
-                        <input type="radio" name="payment" value="card">
-                        <div class="payment-icon"><i class="fas fa-credit-card"></i></div>
-                        <div><strong>Credit / Debit Card</strong><span>Visa, Mastercard, RuPay</span></div>
-                    </label>
-                    <label class="payment-card" data-method="netbanking">
-                        <input type="radio" name="payment" value="netbanking">
-                        <div class="payment-icon"><i class="fas fa-university"></i></div>
-                        <div><strong>Net Banking</strong><span>All major banks</span></div>
-                    </label>
-                    <label class="payment-card" data-method="wallet">
-                        <input type="radio" name="payment" value="wallet">
-                        <div class="payment-icon"><i class="fas fa-wallet"></i></div>
-                        <div><strong>Wallet</strong><span>Paytm, Amazon Pay</span></div>
-                    </label>
-                    <label class="payment-card" data-method="cod">
-                        <input type="radio" name="payment" value="cod">
-                        <div class="payment-icon"><i class="fas fa-money-bill-wave"></i></div>
-                        <div><strong>Cash on Delivery</strong><span>Pay when you receive</span></div>
-                    </label>
-                </div>
-
-                <!-- UPI Section -->
-                <div class="payment-form" id="upiForm">
-                    <div class="form-group">
-                        <label>UPI ID</label>
-                        <input type="text" id="upiId" placeholder="yourname@upi">
+    <!-- Payment -->
+    <div id="paymentSection" style="display:none;">
+        <div class="ck-grid">
+            <div>
+                <div class="ck-card">
+                    <h2><i class="fas fa-credit-card"></i> Payment Method</h2>
+                    <div class="pay-methods">
+                        <label class="pay-card active" data-method="upi"><input type="radio" name="payment" value="upi" checked><div class="pay-icon"><i class="fas fa-mobile-alt"></i></div><div><strong>UPI</strong><span>Google Pay, PhonePe, Paytm</span></div></label>
+                        <label class="pay-card" data-method="card"><input type="radio" name="payment" value="card"><div class="pay-icon"><i class="fas fa-credit-card"></i></div><div><strong>Credit / Debit Card</strong><span>Visa, Mastercard, RuPay</span></div></label>
+                        <label class="pay-card" data-method="netbanking"><input type="radio" name="payment" value="netbanking"><div class="pay-icon"><i class="fas fa-university"></i></div><div><strong>Net Banking</strong><span>All major banks</span></div></label>
+                        <label class="pay-card" data-method="wallet"><input type="radio" name="payment" value="wallet"><div class="pay-icon"><i class="fas fa-wallet"></i></div><div><strong>Wallet</strong><span>Paytm, Amazon Pay</span></div></label>
+                        <label class="pay-card" data-method="cod"><input type="radio" name="payment" value="cod"><div class="pay-icon"><i class="fas fa-money-bill-wave"></i></div><div><strong>Cash on Delivery</strong><span>Pay when you receive</span></div></label>
                     </div>
-                    <p class="upi-note"><i class="fas fa-info-circle"></i> You will receive a payment request on your UPI app</p>
-                </div>
 
-                <!-- Card Section -->
-                <div class="payment-form" id="cardForm" style="display:none;">
-                    <div class="form-group">
-                        <label>Card Number</label>
-                        <div class="card-input-wrap">
-                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
-                            <div class="card-brands">
-                                <i class="fab fa-cc-visa"></i>
-                                <i class="fab fa-cc-mastercard"></i>
-                                <i class="fab fa-cc-amex"></i>
-                            </div>
+                    <div class="pay-form" id="upiForm">
+                        <div class="fg"><label>UPI ID</label><input type="text" id="upiId" placeholder="yourname@upi"></div>
+                        <p style="font-size:12px;color:var(--gray-500);margin-top:6px"><i class="fas fa-info-circle"></i> Payment request will be sent to your UPI app</p>
+                    </div>
+
+                    <div class="pay-form" id="cardForm" style="display:none">
+                        <div class="fg"><label>Card Number</label><div class="card-wrap"><input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19"><div class="card-brands"><i class="fab fa-cc-visa"></i><i class="fab fa-cc-mastercard"></i><i class="fab fa-cc-amex"></i></div></div></div>
+                        <div class="fg"><label>Cardholder Name</label><input type="text" id="cardName" placeholder="Name on card"></div>
+                        <div class="fg-row">
+                            <div class="fg"><label>Expiry</label><input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5"></div>
+                            <div class="fg"><label>CVV</label><input type="password" id="cardCvv" placeholder="***" maxlength="3"></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Cardholder Name</label>
-                        <input type="text" id="cardName" placeholder="Name on card">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Expiry Date</label>
-                            <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5">
+
+                    <div class="pay-form" id="netbankingForm" style="display:none">
+                        <div class="bank-grid">
+                            <label class="bank-opt"><input type="radio" name="bank" value="sbi"><span>SBI</span></label>
+                            <label class="bank-opt"><input type="radio" name="bank" value="hdfc"><span>HDFC</span></label>
+                            <label class="bank-opt"><input type="radio" name="bank" value="icici"><span>ICICI</span></label>
+                            <label class="bank-opt"><input type="radio" name="bank" value="axis"><span>Axis</span></label>
+                            <label class="bank-opt"><input type="radio" name="bank" value="kotak"><span>Kotak</span></label>
+                            <label class="bank-opt"><input type="radio" name="bank" value="pnb"><span>PNB</span></label>
+                            <label class="bank-opt"><input type="radio" name="bank" value="bob"><span>BoB</span></label>
+                            <label class="bank-opt"><input type="radio" name="bank" value="idbi"><span>IDBI</span></label>
                         </div>
-                        <div class="form-group">
-                            <label>CVV</label>
-                            <input type="password" id="cardCvv" placeholder="***" maxlength="3">
+                    </div>
+
+                    <div class="pay-form" id="walletForm" style="display:none">
+                        <div class="wallet-grid">
+                            <label class="wallet-opt"><input type="radio" name="wallet" value="paytm" checked><span>Paytm</span></label>
+                            <label class="wallet-opt"><input type="radio" name="wallet" value="amazonpay"><span>Amazon Pay</span></label>
+                            <label class="wallet-opt"><input type="radio" name="wallet" value="mobikwik"><span>MobiKwik</span></label>
+                            <label class="wallet-opt"><input type="radio" name="wallet" value="freecharge"><span>Freecharge</span></label>
                         </div>
                     </div>
-                </div>
 
-                <!-- Net Banking -->
-                <div class="payment-form" id="netbankingForm" style="display:none;">
-                    <div class="bank-grid">
-                        <label class="bank-option"><input type="radio" name="bank" value="sbi"><span>SBI</span></label>
-                        <label class="bank-option"><input type="radio" name="bank" value="hdfc"><span>HDFC</span></label>
-                        <label class="bank-option"><input type="radio" name="bank" value="icici"><span>ICICI</span></label>
-                        <label class="bank-option"><input type="radio" name="bank" value="axis"><span>Axis</span></label>
-                        <label class="bank-option"><input type="radio" name="bank" value="kotak"><span>Kotak</span></label>
-                        <label class="bank-option"><input type="radio" name="bank" value="pnb"><span>PNB</span></label>
-                        <label class="bank-option"><input type="radio" name="bank" value="bob"><span>Bank of Baroda</span></label>
-                        <label class="bank-option"><input type="radio" name="bank" value="idbi"><span>IDBI</span></label>
+                    <div class="pay-form" id="codForm" style="display:none">
+                        <div class="cod-box"><i class="fas fa-info-circle"></i><p>Pay cash on delivery. ₹25 COD charges apply. Please keep exact change ready.</p></div>
                     </div>
-                </div>
 
-                <!-- Wallet -->
-                <div class="payment-form" id="walletForm" style="display:none;">
-                    <div class="wallet-options">
-                        <label class="wallet-option"><input type="radio" name="wallet" value="paytm" checked><span>Paytm</span></label>
-                        <label class="wallet-option"><input type="radio" name="wallet" value="amazonpay"><span>Amazon Pay</span></label>
-                        <label class="wallet-option"><input type="radio" name="wallet" value="mobikwik"><span>MobiKwik</span></label>
-                        <label class="wallet-option"><input type="radio" name="wallet" value="freecharge"><span>Freecharge</span></label>
+                    <div class="secure-bar"><i class="fas fa-lock"></i> 100% secure & encrypted payment</div>
+
+                    <div class="pay-actions">
+                        <button type="button" class="btn-back" id="backToDelivery"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn-continue" id="placeOrder">Place Order <i class="fas fa-check-circle"></i></button>
                     </div>
-                </div>
-
-                <!-- COD -->
-                <div class="payment-form" id="codForm" style="display:none;">
-                    <div class="cod-info">
-                        <i class="fas fa-info-circle"></i>
-                        <p>Pay cash when your order is delivered. Please keep exact change ready. An additional ₹25 COD charges will apply.</p>
-                    </div>
-                </div>
-
-                <div class="secure-badge">
-                    <i class="fas fa-lock"></i> Your payment information is 100% secure and encrypted
-                </div>
-
-                <div class="payment-actions">
-                    <button type="button" class="back-btn" id="backToDelivery">
-                        <i class="fas fa-arrow-left"></i> Back to Delivery
-                    </button>
-                    <button type="button" class="continue-btn" id="placeOrder">
-                        Place Order <i class="fas fa-check-circle"></i>
-                    </button>
                 </div>
             </div>
 
-            <div class="order-summary-sidebar">
+            <div class="ck-summary">
                 <h3>Order Summary</h3>
-                <div class="summary-items" id="summaryItems2"></div>
-                <div class="summary-totals">
-                    <div class="summary-row"><span>Subtotal</span><span id="subtotal2">₹0</span></div>
-                    <div class="summary-row"><span>Delivery</span><span id="deliveryFee2">₹0</span></div>
-                    <div class="summary-row"><span>GST (5%)</span><span id="gst2">₹0</span></div>
-                    <div class="summary-row discount" id="discountRow2" style="display:none"><span>Discount</span><span id="discountAmt2">-₹0</span></div>
-                    <div class="summary-row total"><span>Total</span><span id="finalTotal2">₹0</span></div>
+                <div class="sum-items" id="summaryItems2"></div>
+                <div class="sum-totals">
+                    <div class="sum-row"><span>Subtotal</span><span id="subtotal2">₹0</span></div>
+                    <div class="sum-row"><span>Delivery</span><span id="deliveryFee2">FREE</span></div>
+                    <div class="sum-row"><span>GST (5%)</span><span id="gst2">₹0</span></div>
+                    <div class="sum-row discount" id="discountRow2" style="display:none"><span>Discount</span><span id="discountAmt2">-₹0</span></div>
+                    <div class="sum-row total"><span>Total</span><span id="finalTotal2">₹0</span></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Success Section -->
-    <div class="checkout-section" id="successSection" style="display:none;">
-        <div class="success-box">
-            <div class="success-icon">
-                <i class="fas fa-check-circle"></i>
-            </div>
+    <!-- Success -->
+    <div id="successSection" style="display:none;">
+        <div class="success-card">
+            <div class="success-check"><i class="fas fa-check"></i></div>
             <h2>Order Placed Successfully!</h2>
-            <p class="order-id">Order ID: <strong id="orderId"></strong></p>
-            <p class="success-msg">Thank you for shopping with Amul! Your order has been confirmed.</p>
-
-            <div class="success-details">
-                <div class="success-detail-card">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div>
-                        <strong>Delivery Address</strong>
-                        <p id="successAddress"></p>
-                    </div>
-                </div>
-                <div class="success-detail-card">
-                    <i class="fas fa-clock"></i>
-                    <div>
-                        <strong>Estimated Delivery</strong>
-                        <p id="successDelivery"></p>
-                    </div>
-                </div>
-                <div class="success-detail-card">
-                    <i class="fas fa-credit-card"></i>
-                    <div>
-                        <strong>Payment Method</strong>
-                        <p id="successPayment"></p>
-                    </div>
-                </div>
-                <div class="success-detail-card">
-                    <i class="fas fa-receipt"></i>
-                    <div>
-                        <strong>Total Amount</strong>
-                        <p id="successTotal"></p>
-                    </div>
-                </div>
+            <p class="success-oid">Order ID: <strong id="orderId"></strong></p>
+            <p class="success-msg">Thank you for shopping with Satkar Pure Point!</p>
+            <div class="success-grid">
+                <div class="success-item"><i class="fas fa-map-marker-alt"></i><div><strong>Delivery Address</strong><p id="successAddress"></p></div></div>
+                <div class="success-item"><i class="fas fa-clock"></i><div><strong>Estimated Delivery</strong><p id="successDelivery"></p></div></div>
+                <div class="success-item"><i class="fas fa-credit-card"></i><div><strong>Payment Method</strong><p id="successPayment"></p></div></div>
+                <div class="success-item"><i class="fas fa-receipt"></i><div><strong>Total Amount</strong><p id="successTotal"></p></div></div>
             </div>
-
-            <div class="success-actions">
-                <a href="index.html" class="continue-btn"><i class="fas fa-shopping-bag"></i> Continue Shopping</a>
-                <button class="print-btn" onclick="window.print()"><i class="fas fa-print"></i> Print Receipt</button>
+            <div class="success-btns">
+                <a href="index.html" class="btn-continue"><i class="fas fa-shopping-bag"></i> Continue Shopping</a>
+                <button class="btn-print" onclick="window.print()"><i class="fas fa-print"></i> Print Receipt</button>
             </div>
         </div>
     </div>
 </main>
-
-<footer class="footer">
-    <div class="footer-bottom">
-        <p>&copy; 2026 Amul Store. All rights reserved.</p>
-    </div>
-</footer>
 
 <script src="checkout.js"></script>
 </body>

@@ -3,144 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amul Store - All Products</title>
+    <title>Satkar Pure Point - An Amul Enterprise</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
+<!-- Top Bar -->
+<div class="topbar">
+    <div class="container topbar-inner">
+        <div class="topbar-left">
+            <span><i class="fas fa-map-marker-alt"></i> Anand, Gujarat - India</span>
+            <span><i class="fas fa-clock"></i> Open: 7 AM - 10 PM</span>
+        </div>
+        <div class="topbar-right">
+            <span><i class="fas fa-phone-alt"></i> +91 98765 43210</span>
+            <span><i class="fas fa-envelope"></i> info@satkarpurepoint.com</span>
+        </div>
+    </div>
+</div>
+
+<!-- Header -->
 <header class="header">
-    <div class="header-top">
-        <div class="container header-top-inner">
-            <span><i class="fas fa-truck"></i> Free Delivery on orders above ₹500</span>
-            <span><i class="fas fa-phone"></i> Contact: 1800-258-3333</span>
+    <div class="container header-inner">
+        <a href="index.html" class="brand">
+            <div class="brand-icon">
+                <i class="fas fa-leaf"></i>
+            </div>
+            <div class="brand-text">
+                <span class="brand-name">Satkar Pure Point</span>
+                <span class="brand-tag">An Amul Enterprise</span>
+            </div>
+        </a>
+
+        <div class="header-search">
+            <input type="text" id="searchInput" placeholder="Search milk, butter, cheese, paneer...">
+            <button id="searchBtn"><i class="fas fa-search"></i></button>
+        </div>
+
+        <div class="header-actions">
+            <div class="header-action" id="cartIcon">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-badge" id="cartCount">0</span>
+                <span class="header-action-label">Cart</span>
+            </div>
         </div>
     </div>
-    <div class="header-main">
-        <div class="container header-main-inner">
-            <div class="logo">
-                <h1><span class="amul-logo">AMUL</span> <span class="tagline">The Taste of India</span></h1>
-            </div>
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search products...">
-                <button id="searchBtn"><i class="fas fa-search"></i></button>
-            </div>
-            <div class="cart-icon" id="cartIcon">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count" id="cartCount">0</span>
-            </div>
-        </div>
-    </div>
-    <nav class="nav-bar">
-        <div class="container nav-inner">
-            <button class="nav-link active" data-category="all">All Products</button>
-            <button class="nav-link" data-category="milk">Milk</button>
-            <button class="nav-link" data-category="butter">Butter & Spreads</button>
-            <button class="nav-link" data-category="ghee">Ghee</button>
-            <button class="nav-link" data-category="cheese">Cheese</button>
-            <button class="nav-link" data-category="paneer">Paneer & Curd</button>
-            <button class="nav-link" data-category="yogurt">Yogurt & Lassi</button>
-            <button class="nav-link" data-category="beverages">Beverages</button>
-            <button class="nav-link" data-category="cream">Creams</button>
-            <button class="nav-link" data-category="powder">Powders</button>
-            <button class="nav-link" data-category="sweets">Sweets</button>
-            <button class="nav-link" data-category="icecream">Ice Cream</button>
-        </div>
-    </nav>
 </header>
 
-<main class="container">
-    <div class="hero-banner">
-        <h2>Welcome to Amul Store</h2>
-        <p>Fresh dairy products delivered to your doorstep</p>
-        <p class="product-total" id="productTotal">Showing all products</p>
+<!-- Navigation -->
+<nav class="main-nav">
+    <div class="container nav-scroll">
+        <button class="nav-item active" data-category="all">
+            <i class="fas fa-th-large"></i> All Products
+        </button>
+        <button class="nav-item" data-category="milk">
+            <i class="fas fa-tint"></i> Milk
+        </button>
+        <button class="nav-item" data-category="butter">
+            <i class="fas fa-cheese"></i> Butter
+        </button>
+        <button class="nav-item" data-category="ghee">
+            <i class="fas fa-fire"></i> Ghee
+        </button>
+        <button class="nav-item" data-category="cheese">
+            <i class="fas fa-cheese"></i> Cheese
+        </button>
+        <button class="nav-item" data-category="paneer">
+            <i class="fas fa-cube"></i> Paneer
+        </button>
+        <button class="nav-item" data-category="yogurt">
+            <i class="fas fa-blender"></i> Yogurt & Lassi
+        </button>
+        <button class="nav-item" data-category="beverages">
+            <i class="fas fa-wine-bottle"></i> Beverages
+        </button>
+        <button class="nav-item" data-category="cream">
+            <i class="fas fa-ice-cream"></i> Creams
+        </button>
+        <button class="nav-item" data-category="powder">
+            <i class="fas fa-box"></i> Powders
+        </button>
+        <button class="nav-item" data-category="sweets">
+            <i class="fas fa-cookie-bite"></i> Sweets
+        </button>
+        <button class="nav-item" data-category="icecream">
+            <i class="fas fa-snowflake"></i> Ice Cream
+        </button>
     </div>
+</nav>
 
-    <div class="products-grid" id="productsGrid">
-        <!-- Products will be injected by JS -->
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-content">
+        <div class="hero-badge"><i class="fas fa-certificate"></i> 100% Pure & Fresh</div>
+        <h1>Pure Dairy,<br><span>Delivered Fresh</span></h1>
+        <p>India's most trusted Amul products — milk, butter, ghee, cheese, paneer and more — delivered to your doorstep.</p>
+        <div class="hero-actions">
+            <a href="#products" class="btn-primary"><i class="fas fa-shopping-bag"></i> Shop Now</a>
+            <a href="#about" class="btn-outline"><i class="fas fa-play-circle"></i> Our Story</a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat"><span class="stat-num">100+</span><span class="stat-label">Products</span></div>
+            <div class="stat-divider"></div>
+            <div class="stat"><span class="stat-num">50K+</span><span class="stat-label">Happy Customers</span></div>
+            <div class="stat-divider"></div>
+            <div class="stat"><span class="stat-num">4.9</span><span class="stat-label">Rating <i class="fas fa-star"></i></span></div>
+        </div>
     </div>
-</main>
+</section>
+
+<!-- Features Strip -->
+<section class="features-strip">
+    <div class="container features-grid">
+        <div class="feature">
+            <div class="feature-icon"><i class="fas fa-truck"></i></div>
+            <div><strong>Free Delivery</strong><span>On orders above ₹500</span></div>
+        </div>
+        <div class="feature">
+            <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+            <div><strong>Freshness Guarantee</strong><span>100% fresh products</span></div>
+        </div>
+        <div class="feature">
+            <div class="feature-icon"><i class="fas fa-undo"></i></div>
+            <div><strong>Easy Returns</strong><span>Hassle-free policy</span></div>
+        </div>
+        <div class="feature">
+            <div class="feature-icon"><i class="fas fa-headset"></i></div>
+            <div><strong>24/7 Support</strong><span>Call us anytime</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- Products Section -->
+<section class="products-section" id="products">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <span class="section-tag">Our Collection</span>
+                <h2>Browse Our Products</h2>
+            </div>
+            <p class="product-count" id="productTotal">Showing all products</p>
+        </div>
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about-section" id="about">
+    <div class="container about-grid">
+        <div class="about-content">
+            <span class="section-tag">About Us</span>
+            <h2>Satkar Pure Point — An Amul Enterprise</h2>
+            <p>We are an authorized Amul distributor committed to delivering pure, fresh, and high-quality dairy products across India. With decades of trust backing the Amul brand, we ensure every product reaches you in perfect condition.</p>
+            <div class="about-points">
+                <div class="about-point"><i class="fas fa-check-circle"></i> Authorized Amul Distributor</div>
+                <div class="about-point"><i class="fas fa-check-circle"></i> Cold Chain Delivery Network</div>
+                <div class="about-point"><i class="fas fa-check-circle"></i> Quality Assured Products</div>
+                <div class="about-point"><i class="fas fa-check-circle"></i> Serving 50,000+ Customers</div>
+            </div>
+        </div>
+        <div class="about-visual">
+            <div class="about-card">
+                <div class="about-card-icon"><i class="fas fa-award"></i></div>
+                <h3>ISO Certified</h3>
+                <p>Quality management system certified</p>
+            </div>
+            <div class="about-card">
+                <div class="about-card-icon"><i class="fas fa-users"></i></div>
+                <h3>50K+ Families</h3>
+                <p>Trust us for daily dairy needs</p>
+            </div>
+            <div class="about-card">
+                <div class="about-card-icon"><i class="fas fa-map-marked-alt"></i></div>
+                <h3>Pan India</h3>
+                <p>Delivery across all major cities</p>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- Cart Sidebar -->
 <div class="cart-overlay" id="cartOverlay"></div>
-<div class="cart-sidebar" id="cartSidebar">
-    <div class="cart-header">
-        <h3><i class="fas fa-shopping-cart"></i> Your Cart</h3>
-        <button class="cart-close" id="cartClose"><i class="fas fa-times"></i></button>
+<div class="cart-drawer" id="cartSidebar">
+    <div class="cart-drawer-header">
+        <h3><i class="fas fa-shopping-bag"></i> Your Cart</h3>
+        <button class="drawer-close" id="cartClose"><i class="fas fa-times"></i></button>
     </div>
-    <div class="cart-items" id="cartItems">
-        <p class="empty-cart">Your cart is empty</p>
+    <div class="cart-drawer-body" id="cartItems">
+        <div class="empty-cart">
+            <i class="fas fa-shopping-bag"></i>
+            <p>Your cart is empty</p>
+            <span>Add products to get started</span>
+        </div>
     </div>
-    <div class="cart-footer" id="cartFooter">
-        <div class="cart-total">
-            <span>Total:</span>
+    <div class="cart-drawer-footer" id="cartFooter">
+        <div class="cart-subtotal">
+            <span>Subtotal</span>
             <span id="cartTotal">₹0</span>
         </div>
-        <button class="checkout-btn">Proceed to Checkout</button>
+        <button class="btn-checkout" id="checkoutBtn">Proceed to Checkout <i class="fas fa-arrow-right"></i></button>
     </div>
 </div>
 
-<!-- Product Modal -->
+<!-- Product Quick View Modal -->
 <div class="modal-overlay" id="modalOverlay">
-    <div class="modal" id="productModal">
-        <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
-        <div class="modal-body">
-            <div class="modal-image" id="modalImage"></div>
-            <div class="modal-details">
-                <span class="modal-category" id="modalCategory"></span>
+    <div class="quick-view-modal" id="productModal">
+        <button class="modal-x" id="modalClose"><i class="fas fa-times"></i></button>
+        <div class="qv-body">
+            <div class="qv-image" id="modalImage"></div>
+            <div class="qv-details">
+                <span class="qv-category" id="modalCategory"></span>
                 <h2 id="modalName"></h2>
-                <p class="modal-size" id="modalSize"></p>
-                <p class="modal-price" id="modalPrice"></p>
-                <div class="quantity-control">
-                    <button id="modalMinus">-</button>
+                <p class="qv-size" id="modalSize"></p>
+                <p class="qv-price" id="modalPrice"></p>
+                <div class="qv-qty">
+                    <button id="modalMinus"><i class="fas fa-minus"></i></button>
                     <span id="modalQty">1</span>
-                    <button id="modalPlus">+</button>
+                    <button id="modalPlus"><i class="fas fa-plus"></i></button>
                 </div>
-                <button class="add-to-cart-btn" id="modalAddCart">Add to Cart</button>
+                <button class="btn-add-cart" id="modalAddCart"><i class="fas fa-shopping-bag"></i> Add to Cart</button>
             </div>
         </div>
     </div>
 </div>
 
-<footer class="footer">
-    <div class="container footer-inner">
-        <div class="footer-col">
-            <h3>About Amul</h3>
-            <p>Amul is an Indian dairy cooperative, based in Anand, Gujarat. It's the world's largest producer of milk and milk products.</p>
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="container footer-grid">
+        <div class="footer-brand">
+            <div class="brand" style="margin-bottom:15px">
+                <div class="brand-icon"><i class="fas fa-leaf"></i></div>
+                <div class="brand-text">
+                    <span class="brand-name" style="color:#fff">Satkar Pure Point</span>
+                    <span class="brand-tag" style="color:#aaa">An Amul Enterprise</span>
+                </div>
+            </div>
+            <p>India's trusted source for pure, fresh Amul dairy products. Quality you can taste, freshness you can trust.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
         </div>
-        <div class="footer-col">
-            <h3>Quick Links</h3>
+        <div class="footer-links">
+            <h4>Quick Links</h4>
             <a href="#">Home</a>
-            <a href="#">Products</a>
-            <a href="#">About Us</a>
+            <a href="#products">Products</a>
+            <a href="#about">About Us</a>
             <a href="#">Contact</a>
         </div>
-        <div class="footer-col">
-            <h3>Contact</h3>
-            <p><i class="fas fa-phone"></i> 1800-258-3333</p>
-            <p><i class="fas fa-envelope"></i> info@amul.com</p>
+        <div class="footer-links">
+            <h4>Categories</h4>
+            <a href="#">Fresh Milk</a>
+            <a href="#">Butter & Ghee</a>
+            <a href="#">Cheese & Paneer</a>
+            <a href="#">Ice Cream</a>
         </div>
-        <div class="footer-col footer-social">
-            <h3>Follow Us</h3>
-            <div class="card">
-                <div class="background"></div>
-                <div class="logo">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29.667 31.69" class="logo-svg">
-                        <path d="M12.827,1.628A1.561,1.561,0,0,1,14.31,0h2.964a1.561,1.561,0,0,1,1.483,1.628v11.9a9.252,9.252,0,0,1-2.432,6.852q-2.432,2.409-6.963,2.409T2.4,20.452Q0,18.094,0,13.669V1.628A1.561,1.561,0,0,1,1.483,0h2.98A1.561,1.561,0,0,1,5.947,1.628V13.191a5.635,5.635,0,0,0,.85,3.451,3.153,3.153,0,0,0,2.632,1.094,3.032,3.032,0,0,0,2.582-1.076,5.836,5.836,0,0,0,.816-3.486Z" transform="translate(0 0)"></path>
-                        <path d="M75.207,20.857a1.561,1.561,0,0,1-1.483,1.628h-2.98a1.561,1.561,0,0,1-1.483-1.628V1.628A1.561,1.561,0,0,1,70.743,0h2.98a1.561,1.561,0,0,1,1.483,1.628Z" transform="translate(-45.91 0)"></path>
-                        <path d="M0,80.018A1.561,1.561,0,0,1,1.483,78.39h26.7a1.561,1.561,0,0,1,1.483,1.628v2.006a1.561,1.561,0,0,1-1.483,1.628H1.483A1.561,1.561,0,0,1,0,82.025Z" transform="translate(0 -51.963)"></path>
-                    </svg>
-                </div>
-                <div class="box box1"><span class="icon"><svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" class="svg"><path d="M 9.9980469 3 C 6.1390469 3 3 6.1419531 3 10.001953 L 3 20.001953 C 3 23.860953 6.1419531 27 10.001953 27 L 20.001953 27 C 23.860953 27 27 23.858047 27 19.998047 L 27 9.9980469 C 27 6.1390469 23.858047 3 19.998047 3 L 9.9980469 3 z M 22 7 C 22.552 7 23 7.448 23 8 C 23 8.552 22.552 9 22 9 C 21.448 9 21 8.552 21 8 C 21 7.448 21.448 7 22 7 z M 15 9 C 18.309 9 21 11.691 21 15 C 21 18.309 18.309 21 15 21 C 11.691 21 9 18.309 9 15 C 9 11.691 11.691 9 15 9 z M 15 11 A 4 4 0 0 0 11 15 A 4 4 0 0 0 15 19 A 4 4 0 0 0 19 15 A 4 4 0 0 0 15 11 z"></path></svg></span></div>
-                <div class="box box2"><span class="icon"><svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" class="svg"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path></svg></span></div>
-                <div class="box box3"><span class="icon"><svg viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg" class="svg"><path d="M524.531,69.836a1.5,1.5,0,0,0-.764-.7A485.065,485.065,0,0,0,404.081,32.03a1.816,1.816,0,0,0-1.923.91,337.461,337.461,0,0,0-14.9,30.6,447.848,447.848,0,0,0-134.426,0,309.541,309.541,0,0,0-15.135-30.6,1.89,1.89,0,0,0-1.924-.91A483.689,483.689,0,0,0,116.085,69.137a1.712,1.712,0,0,0-.788.676C39.068,183.651,18.186,294.69,28.43,404.354a2.016,2.016,0,0,0,.765,1.375A487.666,487.666,0,0,0,176.02,479.918a1.9,1.9,0,0,0,2.063-.676A348.2,348.2,0,0,0,208.12,430.4a1.86,1.86,0,0,0-1.019-2.588,321.173,321.173,0,0,1-45.868-21.853,1.885,1.885,0,0,1-.185-3.126c3.082-2.309,6.166-4.711,9.109-7.137a1.819,1.819,0,0,1,1.9-.256c96.229,43.917,200.41,43.917,295.5,0a1.812,1.812,0,0,1,1.924.233c2.944,2.426,6.027,4.851,9.132,7.16a1.884,1.884,0,0,1-.162,3.126,301.407,301.407,0,0,1-45.89,21.83,1.875,1.875,0,0,0-1,2.611,391.055,391.055,0,0,0,30.014,48.815,1.864,1.864,0,0,0,2.063.7A486.048,486.048,0,0,0,610.7,405.729a1.882,1.882,0,0,0,.765-1.352C623.729,277.594,590.933,167.465,524.531,69.836ZM222.491,337.58c-28.972,0-52.844-26.587-52.844-59.239S193.056,219.1,222.491,219.1c29.665,0,53.306,26.82,52.843,59.239C275.334,310.993,251.924,337.58,222.491,337.58Zm195.38,0c-28.971,0-52.843-26.587-52.843-59.239S388.437,219.1,417.871,219.1c29.667,0,53.307,26.82,52.844,59.239C470.715,310.993,447.538,337.58,417.871,337.58Z"></path></svg></span></div>
-                <div class="box box4"></div>
-            </div>
+        <div class="footer-contact">
+            <h4>Contact Us</h4>
+            <p><i class="fas fa-map-marker-alt"></i> Anand, Gujarat, India</p>
+            <p><i class="fas fa-phone-alt"></i> +91 98765 43210</p>
+            <p><i class="fas fa-envelope"></i> info@satkarpurepoint.com</p>
+            <p><i class="fas fa-clock"></i> Mon - Sun: 7 AM - 10 PM</p>
         </div>
     </div>
     <div class="footer-bottom">
-        <p>&copy; 2026 Amul Store. All rights reserved.</p>
+        <div class="container footer-bottom-inner">
+            <p>&copy; 2026 Satkar Pure Point. All rights reserved. An Amul Enterprise.</p>
+            <div class="footer-payments">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-amex"></i>
+                <i class="fab fa-google-pay"></i>
+                <i class="fab fa-apple-pay"></i>
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+        </div>
     </div>
 </footer>
 
