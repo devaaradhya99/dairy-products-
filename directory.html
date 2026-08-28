@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satkar Pure Point - Our Team</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .dir-hero {
+            padding: 60px 0 40px;
+            text-align: center;
+            position: relative;
+        }
+        .dir-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(10,126,140,0.12) 0%, transparent 100%);
+        }
+        .dir-hero-content { position: relative; z-index: 2; }
+        .dir-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+        .dir-hero h1 span { color: var(--accent); }
+        .dir-hero p {
+            font-size: 16px;
+            color: var(--gray-700);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .team-section {
+            padding: 40px 0 60px;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .team-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 36px 28px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+        .team-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(10,126,140,0.2);
+            border-color: rgba(10,126,140,0.3);
+        }
+        .team-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            margin: 0 auto 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #fff;
+            position: relative;
+        }
+        .team-avatar.owner {
+            background: linear-gradient(135deg, var(--accent), #a8862a);
+        }
+        .team-avatar.marketing {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+        .team-avatar-ring {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid rgba(201,168,76,0.3);
+        }
+        .team-name {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+        .team-role {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        .team-divider {
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            margin: 0 auto 16px;
+            border-radius: 1px;
+        }
+        .team-desc {
+            font-size: 14px;
+            color: var(--gray-700);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .team-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        .team-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--gray-700);
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+            width: 100%;
+            max-width: 260px;
+            transition: var(--transition);
+        }
+        .team-contact-item:hover {
+            border-color: var(--primary);
+            background: rgba(10,126,140,0.08);
+        }
+        .team-contact-item i {
+            color: var(--primary);
+            font-size: 14px;
+            width: 18px;
+            text-align: center;
+        }
+        .team-contact-item a {
+            color: var(--gray-700);
+            text-decoration: none;
+        }
+        .team-contact-item a:hover { color: var(--primary); }
+
+        .about-full {
+            padding: 60px 0;
+            background: rgba(21, 29, 46, 0.5);
+        }
+        .about-full-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .about-full-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .about-full-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .about-full-card h3 i { color: var(--primary); }
+        .about-full-card p {
+            font-size: 14px;
+            color: var(--gray-700);
+            line-height: 1.8;
+        }
+        .about-full-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .about-full-card ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            font-size: 13px;
+            color: var(--gray-700);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .about-full-card ul li:last-child { border-bottom: none; }
+        .about-full-card ul li i { color: var(--accent); font-size: 12px; }
+
+        .map-section {
+            padding: 60px 0;
+        }
+        .map-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            border: 1px solid rgba(255,255,255,0.05);
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .map-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        .map-card p {
+            font-size: 14px;
+            color: var(--gray-700);
+            margin-bottom: 24px;
+        }
+        .map-placeholder {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, rgba(10,126,140,0.1), rgba(201,168,76,0.05));
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: 1px dashed rgba(255,255,255,0.1);
+        }
+        .map-placeholder i { font-size: 48px; color: var(--primary); }
+        .map-placeholder span { font-size: 14px; color: var(--gray-500); }
+        .map-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+        .map-info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--gray-700);
+        }
+        .map-info-item i { color: var(--primary); }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray-700);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+        .back-btn:hover { color: var(--primary); }
+
+        @media (max-width: 768px) {
+            .dir-hero h1 { font-size: 30px; }
+            .team-grid { grid-template-columns: 1fr; }
+            .about-full-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="topbar">
+    <div class="container topbar-inner">
+        <div class="topbar-left">
+            <span><i class="fas fa-map-marker-alt"></i> Indore, Madhya Pradesh - India</span>
+            <span><i class="fas fa-clock"></i> Open: 7 AM - 10 PM</span>
+        </div>
+        <div class="topbar-right">
+            <span><i class="fas fa-phone-alt"></i> +91 95842 41234</span>
+            <span><i class="fas fa-envelope"></i> info@satkarpurepoint.com</span>
+        </div>
+    </div>
+</div>
+
+<!-- Header -->
+<header class="header">
+    <div class="container header-inner">
+        <a href="index.html" class="brand">
+            <div class="brand-icon"><i class="fas fa-leaf"></i></div>
+            <div class="brand-text">
+                <span class="brand-name">Satkar Pure Point</span>
+                <span class="brand-tag">An Amul Enterprise</span>
+            </div>
+        </a>
+        <div class="header-search">
+            <input type="text" placeholder="Search milk, butter, cheese, paneer..." disabled>
+        </div>
+        <div class="header-actions">
+            <a href="index.html" class="header-action" style="text-decoration:none">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="header-action-label">Shop</span>
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Navigation -->
+<nav class="main-nav">
+    <div class="container nav-scroll">
+        <a href="index.html" class="nav-item" style="text-decoration:none"><i class="fas fa-home"></i> Home</a>
+        <a href="index.html#products" class="nav-item" style="text-decoration:none"><i class="fas fa-th-large"></i> Products</a>
+        <a href="directory.html" class="nav-item active" style="text-decoration:none"><i class="fas fa-users"></i> Our Team</a>
+        <a href="index.html#about" class="nav-item" style="text-decoration:none"><i class="fas fa-info-circle"></i> About</a>
+    </div>
+</nav>
+
+<main class="container">
+
+    <!-- Hero -->
+    <section class="dir-hero">
+        <div class="dir-hero-content">
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+            <h1>Meet <span>Our Team</span></h1>
+            <p>The people behind Satkar Pure Point — dedicated to bringing you the freshest Amul dairy products every single day.</p>
+        </div>
+    </section>
+
+    <!-- Team Cards -->
+    <section class="team-section">
+        <div class="team-grid">
+
+            <!-- Owner -->
+            <div class="team-card">
+                <div class="team-avatar owner">
+                    <div class="team-avatar-ring"></div>
+                    <i class="fas fa-crown"></i>
+                </div>
+                <h3 class="team-name">Sanmeet Singh</h3>
+                <p class="team-role">Owner & Founder</p>
+                <div class="team-divider"></div>
+                <p class="team-desc">Visionary leader with a passion for quality dairy. Sanmeet founded Satkar Pure Point with the mission of delivering pure, fresh Amul products to every household in Indore.</p>
+                <div class="team-contact">
+                    <div class="team-contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <a href="tel:+919584241234">+91 95842 41234</a>
+                    </div>
+                    <div class="team-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:sanmeet@satkarpurepoint.com">sanmeet@satkarpurepoint.com</a>
+                    </div>
+                    <div class="team-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Indore, Madhya Pradesh
+                    </div>
+                </div>
+            </div>
+
+            <!-- Marketing -->
+            <div class="team-card">
+                <div class="team-avatar marketing">
+                    <div class="team-avatar-ring"></div>
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <h3 class="team-name">Gaurav Khare</h3>
+                <p class="team-role">Marketing & Accounts</p>
+                <div class="team-divider"></div>
+                <p class="team-desc">Strategic mind behind our growth. Gaurav handles marketing campaigns, customer relationships, and accounts management to keep Satkar Pure Point running smoothly.</p>
+                <div class="team-contact">
+                    <div class="team-contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <a href="tel:+919584241234">+91 95842 41234</a>
+                    </div>
+                    <div class="team-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:gaurav@satkarpurepoint.com">gaurav@satkarpurepoint.com</a>
+                    </div>
+                    <div class="team-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Indore, Madhya Pradesh
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- About Full -->
+    <section class="about-full">
+        <div class="about-full-grid">
+            <div class="about-full-card">
+                <h3><i class="fas fa-store"></i> About Satkar Pure Point</h3>
+                <p>Satkar Pure Point is an authorized Amul enterprise based in Indore, Madhya Pradesh. We specialize in delivering the full range of Amul dairy products — from fresh milk and butter to ghee, cheese, paneer, sweets, and ice cream — directly to your doorstep.</p>
+                <br>
+                <p>Our commitment is simple: pure products, fresh delivery, and honest service. Every product we deliver is handled with care through our cold-chain network to ensure it reaches you in perfect condition.</p>
+            </div>
+            <div class="about-full-card">
+                <h3><i class="fas fa-star"></i> Why Choose Us</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Authorized Amul Distributor in Indore</li>
+                    <li><i class="fas fa-check-circle"></i> Cold-Chain Fresh Delivery</li>
+                    <li><i class="fas fa-check-circle"></i> 100+ Amul Products Available</li>
+                    <li><i class="fas fa-check-circle"></i> Same-Day Delivery for Indore City</li>
+                    <li><i class="fas fa-check-circle"></i> Wholesale & Retail Available</li>
+                    <li><i class="fas fa-check-circle"></i> Trusted by 50,000+ Families</li>
+                    <li><i class="fas fa-check-circle"></i> Quality Assured — No Compromise</li>
+                    <li><i class="fas fa-check-circle"></i> Easy Returns & Refund Policy</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location -->
+    <section class="map-section">
+        <div class="map-card">
+            <h3><i class="fas fa-map-marker-alt"></i> Our Location</h3>
+            <p>Satkar Pure Point — An Amul Enterprise, Indore, Madhya Pradesh, India</p>
+            <div class="map-placeholder">
+                <i class="fas fa-map-marked-alt"></i>
+                <span>Indore, Madhya Pradesh, India</span>
+            </div>
+            <div class="map-info">
+                <div class="map-info-item"><i class="fas fa-phone-alt"></i> +91 95842 41234</div>
+                <div class="map-info-item"><i class="fas fa-clock"></i> Mon - Sun: 7 AM - 10 PM</div>
+                <div class="map-info-item"><i class="fas fa-envelope"></i> info@satkarpurepoint.com</div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="container footer-grid">
+        <div class="footer-brand">
+            <div class="brand" style="margin-bottom:15px">
+                <div class="brand-icon"><i class="fas fa-leaf"></i></div>
+                <div class="brand-text">
+                    <span class="brand-name" style="color:#fff">Satkar Pure Point</span>
+                    <span class="brand-tag" style="color:#aaa">An Amul Enterprise</span>
+                </div>
+            </div>
+            <p>India's trusted source for pure, fresh Amul dairy products. Quality you can taste, freshness you can trust.</p>
+        </div>
+        <div class="footer-links">
+            <h4>Quick Links</h4>
+            <a href="index.html">Home</a>
+            <a href="index.html#products">Products</a>
+            <a href="directory.html">Our Team</a>
+            <a href="index.html#about">About</a>
+        </div>
+        <div class="footer-links">
+            <h4>Categories</h4>
+            <a href="index.html">Fresh Milk</a>
+            <a href="index.html">Butter & Ghee</a>
+            <a href="index.html">Cheese & Paneer</a>
+            <a href="index.html">Ice Cream</a>
+        </div>
+        <div class="footer-contact">
+            <h4>Contact Us</h4>
+            <p><i class="fas fa-map-marker-alt"></i> Indore, Madhya Pradesh</p>
+            <p><i class="fas fa-phone-alt"></i> +91 95842 41234</p>
+            <p><i class="fas fa-envelope"></i> info@satkarpurepoint.com</p>
+            <p><i class="fas fa-clock"></i> Mon - Sun: 7 AM - 10 PM</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container footer-bottom-inner">
+            <p>&copy; 2026 Satkar Pure Point. All rights reserved. An Amul Enterprise.</p>
+            <div class="footer-payments">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-amex"></i>
+                <i class="fab fa-google-pay"></i>
+                <i class="fab fa-apple-pay"></i>
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
